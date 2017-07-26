@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kudakoding.aaizat.kraider.SettingActivity"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="ip address"
+            android:textAllCaps="true"
+            android:textStyle="bold"/>
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="192.168.0.1"
+            android:textAlignment="center"
+            />
+
+    </RelativeLayout>
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/groupmode"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/trainbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="train"
+            android:textAllCaps="true"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/autobtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="automation"
+            android:textAllCaps="true"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/manualbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="manual"
+            android:textAllCaps="true"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/groupjoy"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/solobtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="solo"
+            android:textAllCaps="true"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/dualbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dual"
+            android:textAllCaps="true"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+
+</LinearLayout>

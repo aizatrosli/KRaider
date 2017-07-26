@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="12dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:background="@drawable/android"
+    android:gravity="center"
+    tools:context="com.kudakoding.aaizat.kraider.MainActivity">
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:gravity="center_horizontal"
+    android:shrinkColumns="*"
+    android:stretchColumns="*"
+    android:layout_centerHorizontal="true">
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent">
+        <TextView
+            android:id="@+id/speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="speed"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textColor="#B3ffffff"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+        <TextView
+            android:id="@+id/steer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="steer"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+        <TextView
+            android:id="@+id/mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mode"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/dis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="distance"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="battery"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+
+
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:id="@+id/speedval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+        <TextView
+            android:id="@+id/steerval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+        <TextView
+            android:id="@+id/modeval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="train"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/disval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 cm"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/batteryval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%"
+            android:textColor="#B3ffffff"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+
+
+
+    </TableRow>
+
+</TableLayout>
+
+    <com.erz.joysticklibrary.JoyStick
+        android:id="@+id/joy1"
+        app:buttonDrawable="@drawable/joyl"
+        app:backgroundDrawable="@drawable/cleanbaser"
+        app:percentage="38"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/joy1"
+            android:layout_alignStart="@id/joy1"></RelativeLayout>
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tableLayout">
+
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow>
+
+        </TableRow>
+</TableLayout>
+    <com.erz.joysticklibrary.JoyStick
+        android:id="@+id/joy2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:backgroundDrawable="@drawable/cleanbasel"
+        app:percentage="38"
+        app:buttonDrawable="@drawable/joyr"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/joy2"
+        android:layout_alignEnd="@id/joy2"></RelativeLayout>
+
+</RelativeLayout>

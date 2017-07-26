@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:background="#888888"
+    tools:context="com.kudakoding.aaizat.kraider.MainActivity">
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:stretchColumns="*"
+    android:layout_centerHorizontal="true">
+    <TableRow>
+        <TextView
+            android:id="@+id/speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="steer"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+        <TextView
+            android:id="@+id/steer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="steer"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+        <TextView
+            android:id="@+id/mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mode"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/dis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="distance"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="battery"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+
+
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:id="@+id/speedval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+        <TextView
+            android:id="@+id/steerval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+        <TextView
+            android:id="@+id/modeval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="train"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/disval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 cm"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true"/>
+        <TextView
+            android:id="@+id/batteryval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100%"
+            android:fontFamily="monospace"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textAllCaps="true" />
+
+
+
+    </TableRow>
+
+</TableLayout>
+
+
+    <com.erz.joysticklibrary.JoyStick
+        android:id="@+id/joy1"
+        app:buttonDrawable="@drawable/analog"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
+
+
+    <com.erz.joysticklibrary.JoyStick
+        android:id="@+id/joy2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+
+</RelativeLayout>
