@@ -148,25 +148,24 @@
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"/>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/joy1"
-            android:layout_alignStart="@id/joy1"></RelativeLayout>
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:shrinkColumns="*"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/tableLayout">
 
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow>
+   <Button
+       android:id="@+id/startbtn"
+       android:layout_width="wrap_content"
+       android:background="@drawable/smalllogo"
+       android:layout_height="wrap_content"
+       android:layout_margin="10sp"
+       android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true" />
 
-        </TableRow>
-</TableLayout>
+    <Button
+        android:id="@+id/settingbtn"
+        android:layout_width="100sp"
+        android:background="#0DFFFFFF"
+        android:layout_above="@id/startbtn"
+        android:layout_height="25sp"
+        android:layout_centerHorizontal="true" />
+
     <com.erz.joysticklibrary.JoyStick
         android:id="@+id/joy2"
         android:layout_width="200dp"
@@ -176,10 +175,7 @@
         app:buttonDrawable="@drawable/joyr"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/joy2"
-        android:layout_alignEnd="@id/joy2"></RelativeLayout>
+
+
 
 </RelativeLayout>
