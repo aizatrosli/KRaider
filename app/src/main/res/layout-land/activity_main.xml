@@ -154,6 +154,7 @@
        android:layout_width="wrap_content"
        android:background="@drawable/smalllogo"
        android:layout_height="wrap_content"
+       android:onClick="startRun"
        android:layout_margin="10sp"
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true" />
@@ -163,7 +164,8 @@
         android:layout_width="100sp"
         android:background="#0DFFFFFF"
         android:layout_above="@id/startbtn"
-        android:layout_height="25sp"
+        android:onClick="startSetting"
+        android:layout_height="50sp"
         android:layout_centerHorizontal="true" />
 
     <com.erz.joysticklibrary.JoyStick
