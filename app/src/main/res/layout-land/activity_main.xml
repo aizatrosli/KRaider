@@ -141,8 +141,6 @@
 
     <com.erz.joysticklibrary.JoyStick
         android:id="@+id/joy1"
-        app:buttonDrawable="@drawable/joyl"
-        app:backgroundDrawable="@drawable/cleanbaser"
         app:percentage="38"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -172,9 +170,7 @@
         android:id="@+id/joy2"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:backgroundDrawable="@drawable/cleanbasel"
         app:percentage="38"
-        app:buttonDrawable="@drawable/joyr"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"/>
 
