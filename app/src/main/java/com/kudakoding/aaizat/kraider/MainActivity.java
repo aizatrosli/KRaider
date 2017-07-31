@@ -5,9 +5,11 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.app.ActivityManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erz.joysticklibrary.JoyStick;
@@ -28,19 +30,30 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
     public String modestring;
     public String joystring;
     public int portvalue = 5050;
-    private Button btnStart;
     private String TAG = "MainActivity";
     private long TIMEOUT = 10l;
 
+    private LoopActivity loopactivity;
 
+    private Button btnStart;
+    private TextView valspeed;
+    private TextView valsteer;
+    private TextView valmode;
+    private TextView valdis;
+    private TextView valbattery;
+
+    public double joyyvalue;
+    public double joyxvalue;
+    public int joyydirection;
+    public int joyxdirection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        JoyStick joy1 = (JoyStick) findViewById(R.id.joy1);
-        JoyStick joy2 = (JoyStick) findViewById(R.id.joy2);
+        final JoyStick joy1 = (JoyStick) findViewById(R.id.joy1);
+        final JoyStick joy2 = (JoyStick) findViewById(R.id.joy2);
 
         joy1.setListener(this);
         joy1.enableStayPut(false);
@@ -49,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
         joy1.setButtonDrawable(R.drawable.joyl);
         //joy1.setPadColor(Color.parseColor("#55ffffff"));
         //joy1.setButtonColor(Color.parseColor("#55ff0000"));
+
+
 
         joy2.setListener(this);
         joy2.enableStayPut(false);
@@ -59,11 +74,33 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
         //joy2.setButtonColor(Color.parseColor("#55ff0000"));
 
 
-
-
-
         getJoySettings(joystring);
         addListenerOnButton();
+
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(50);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // update TextView here!
+                                dashboardval();
+                                joy1.invalidate();
+                                joy2.invalidate();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
+
     }
 
     protected void onDestroy()
@@ -95,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
      public void addListenerOnButton()
     {
         btnStart = (Button) findViewById(R.id.startbtn);
+        int speedval = 0;
 
         btnStart.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -102,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
               ipvalue = getIntent().getExtras().getString(SettingActivity.ipvalue);
               modestring = getIntent().getExtras().getString(SettingActivity.modestring);
               joystring = getIntent().getExtras().getString(SettingActivity.joystring);
+
+
               startUpConnection(ipvalue,portvalue);
           }
       });
@@ -150,21 +190,22 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
     @Override
     public void onMove(JoyStick joyStick, double angle, double power, int direction)
     {
-        double joyyvalue;
-        double joyxvalue;
-        int joyydirection;
-        int joyxdirection;
+
+
         switch (joyStick.getId())
         {
             case R.id.joy1:
                 joyyvalue = power;
                 joyydirection = direction;
+
                 break;
             case R.id.joy2:
                 joyxvalue = power;
                 joyxdirection = direction;
+
                 break;
         }
+
     }
 
     @Override
@@ -175,5 +216,50 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
     @Override
     public void onDoubleTap() {
 
+    }
+
+
+    public void dashboardval()
+    {
+        valspeed = (TextView) findViewById(R.id.speedval);
+        valsteer = (TextView) findViewById(R.id.steerval);
+        valmode = (TextView) findViewById(R.id.modeval);
+        valdis = (TextView) findViewById(R.id.disval);
+        valbattery = (TextView) findViewById(R.id.batteryval);
+        String ydirection = "";
+        String xdirection  = "";
+
+        if (joyydirection == 2){
+            ydirection = "+";
+        }
+        if (joyydirection == 6){
+            ydirection = "-";
+        }
+        else{
+            ydirection = "";
+        }
+        valspeed.setText(ydirection+ String.valueOf((int)joyyvalue) + "%");
+
+        if (joyxdirection == 4){
+            xdirection = "+";
+        }
+        if (joyxdirection == 0){
+            xdirection = "-";
+        }
+        else{
+            xdirection = "";
+        }
+        valsteer.setText(xdirection+ String.valueOf((int)joyxvalue) + "%");
+    }
+
+    public void surfaceCreated(SurfaceHolder holder) {
+        //loopactivity = new LoopActivity(this);
+        loopactivity.setRunning(true);
+        loopactivity.start();
+    }
+
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        loopactivity.setRunning(false);
+        loopactivity = null;
     }
 }

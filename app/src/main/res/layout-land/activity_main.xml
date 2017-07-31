@@ -106,7 +106,7 @@
             android:id="@+id/modeval"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="train"
+            android:text="ready"
             android:textColor="#B3ffffff"
             android:fontFamily="monospace"
             android:textSize="20sp"
