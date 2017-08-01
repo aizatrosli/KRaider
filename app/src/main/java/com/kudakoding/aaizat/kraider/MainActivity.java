@@ -15,10 +15,12 @@ import android.widget.Toast;
 import com.erz.joysticklibrary.JoyStick;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements JoyStick.JoyStickListener{
@@ -46,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
     public double joyxvalue;
     public int joyydirection;
     public int joyxdirection;
+    public String joyysend;
+    public String joyxsend;
+    public String joysend;
+    public boolean sendnow = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,12 +143,22 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
         btnStart.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              ipvalue = getIntent().getExtras().getString(SettingActivity.ipvalue);
-              modestring = getIntent().getExtras().getString(SettingActivity.modestring);
-              joystring = getIntent().getExtras().getString(SettingActivity.joystring);
+              if (ipvalue == null && modestring == null && joystring == null){
+                  ipvalue = "192.168.0.1";
+                  modestring = "manual";
+                  joystring = "dual";
+              }
+              else{
+                  ipvalue = getIntent().getExtras().getString(SettingActivity.ipvalue);
+                  modestring = getIntent().getExtras().getString(SettingActivity.modestring);
+                  joystring = getIntent().getExtras().getString(SettingActivity.joystring);
+              }
 
+
+              btnStart.setHighlightColor(Color.BLUE);
 
               startUpConnection(ipvalue,portvalue);
+              sendnow = true;
           }
       });
 
@@ -238,7 +254,8 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
         else{
             ydirection = "";
         }
-        valspeed.setText(ydirection+ String.valueOf((int)joyyvalue) + "%");
+        joyysend = ydirection + String.valueOf((int)joyyvalue);
+        valspeed.setText(joyysend + "%");
 
         if (joyxdirection == 4){
             xdirection = "+";
@@ -249,8 +266,52 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
         else{
             xdirection = "";
         }
-        valsteer.setText(xdirection+ String.valueOf((int)joyxvalue) + "%");
+        joyxsend = xdirection + String.valueOf((int)joyxvalue);
+        valsteer.setText(joyxsend + "%");
+
+        if (sendnow == true) {
+            joysend = modestring + ", " + joyysend + ", " + joyxsend;
+            Log.d(TAG, "Sending data  " + joysend);
+            sendData(joysend);
+        }
+
     }
+
+    private void sendData(String data) {
+
+        if (!socket.isConnected() || socket.isClosed()) {
+            Toast.makeText(getApplicationContext(), "Joystick is disconnected...",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+
+            byte [] arr = data.getBytes();
+            byte [] cpy = ByteBuffer.allocate(arr.length+1).array();
+
+            for (int i = 0; i < arr.length; i++) {
+                cpy[i] = arr[i];
+            }
+
+            //Terminating the string with null character
+            cpy[arr.length] = 0;
+
+            outputStream.write(cpy);
+            outputStream.flush();
+
+            Log.d(TAG, "Sending data  " + data);
+        } catch (IOException e) {
+            Log.e(TAG, "IOException while sending data "
+                    + e.getMessage());
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            Log.e(TAG, "NullPointerException while sending data "
+                    + e.getMessage());
+        }
+    }
+
 
     public void surfaceCreated(SurfaceHolder holder) {
         //loopactivity = new LoopActivity(this);
