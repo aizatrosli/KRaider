@@ -53,13 +53,16 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
     public String joysend;
     public boolean sendnow = false;
 
+    public JoyStick joy1;
+    public JoyStick joy2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final JoyStick joy1 = (JoyStick) findViewById(R.id.joy1);
-        final JoyStick joy2 = (JoyStick) findViewById(R.id.joy2);
+        joy1 = (JoyStick) findViewById(R.id.joy1);
+        joy2 = (JoyStick) findViewById(R.id.joy2);
 
         joy1.setListener(this);
         joy1.enableStayPut(false);
@@ -79,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
         //joy2.setPadColor(Color.parseColor("#55ffffff"));
         //joy2.setButtonColor(Color.parseColor("#55ff0000"));
 
-
         getJoySettings(joystring);
         addListenerOnButton();
 
@@ -93,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                // update TextView here!
                                 dashboardval();
                                 joy1.invalidate();
                                 joy2.invalidate();
@@ -132,6 +133,9 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
 
     public void startSetting (View view){
         Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+    //    intent.putExtra("ip", ipvalue);
+    //    intent.putExtra("mode", modestring);
+    //    intent.putExtra("joy", joystring);
         startActivity(intent);
     }
 
@@ -143,20 +147,12 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
         btnStart.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              if (ipvalue == null && modestring == null && joystring == null){
-                  ipvalue = "192.168.0.1";
-                  modestring = "manual";
-                  joystring = "dual";
-              }
-              else{
-                  ipvalue = getIntent().getExtras().getString(SettingActivity.ipvalue);
-                  modestring = getIntent().getExtras().getString(SettingActivity.modestring);
-                  joystring = getIntent().getExtras().getString(SettingActivity.joystring);
-              }
 
 
+              dashboardetc();
               btnStart.setHighlightColor(Color.BLUE);
 
+              getJoySettings(joystring);
               startUpConnection(ipvalue,portvalue);
               sendnow = true;
           }
@@ -170,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
 
   public void startUpConnection(final String ipvalue, final int portvalue)
   {
+      Log.d(TAG, "Connecting to " + ipvalue + ":" + portvalue);
       Runnable runnable = new Runnable()
       {
           @Override
@@ -192,14 +189,18 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
 
   }
   public void getJoySettings(String joymode){
+      Log.d(TAG, "Sending data  " + joymode);
       if (joymode == "solo")
       {
-          //joy1.setType(JoyStick.TYPE_4_AXIS);
+          joy1.setType(JoyStick.TYPE_4_AXIS);
+          joy1.invalidate();
       }
-      if(joymode == "dual")
+      else if(joymode == "dual")
       {
-          //joy1.setType(JoyStick.TYPE_2_AXIS_UP_DOWN);
-          //joy2.setType(JoyStick.TYPE_2_AXIS_LEFT_RIGHT);
+          joy1.setType(JoyStick.TYPE_2_AXIS_UP_DOWN);
+          joy2.setType(JoyStick.TYPE_2_AXIS_LEFT_RIGHT);
+          joy1.invalidate();
+          joy2.invalidate();
       }
   }
 
@@ -239,9 +240,10 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
     {
         valspeed = (TextView) findViewById(R.id.speedval);
         valsteer = (TextView) findViewById(R.id.steerval);
-        valmode = (TextView) findViewById(R.id.modeval);
+        //valmode = (TextView) findViewById(R.id.modeval);
         valdis = (TextView) findViewById(R.id.disval);
         valbattery = (TextView) findViewById(R.id.batteryval);
+
         String ydirection = "";
         String xdirection  = "";
 
@@ -271,12 +273,32 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
 
         if (sendnow == true) {
             joysend = modestring + ", " + joyysend + ", " + joyxsend;
-            Log.d(TAG, "Sending data  " + joysend);
+            //Log.d(TAG, "Sending data  " + joysend);
             sendData(joysend);
         }
 
     }
+    public void dashboardetc()
+    {
 
+
+        valmode = (TextView) findViewById(R.id.modeval);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            ipvalue = extras.getString("ipvalue");
+            modestring = extras.getString("modestring");
+            joystring = extras.getString("joystring");
+        }
+        if (extras == null)
+        {
+            ipvalue = "192.168.0.1";
+            modestring = "manual";
+            joystring = "dual";
+        }
+
+
+        valmode.setText(modestring);
+    }
     private void sendData(String data) {
 
         if (!socket.isConnected() || socket.isClosed()) {

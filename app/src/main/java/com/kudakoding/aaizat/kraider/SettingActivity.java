@@ -30,7 +30,6 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        ipvalue = "192.168.0.1";
         addListenerOnButton();
     }
 
@@ -55,9 +54,13 @@ public class SettingActivity extends AppCompatActivity {
                 radioBmode = (RadioButton) findViewById(selectedIdmode);
                 radioBjoy = (RadioButton) findViewById(selectedIdjoy);
 
-                intent.putExtra(ipvalue, editipadd.getText().toString());
-                intent.putExtra(joystring, radioBjoy.getText().toString());
-                intent.putExtra(modestring, radioBmode.getText().toString());
+                ipvalue = editipadd.getText().toString();
+                joystring = radioBjoy.getText().toString();
+                modestring = radioBmode.getText().toString();
+
+                intent.putExtra("ipvalue", ipvalue);
+                intent.putExtra("joystring",joystring );
+                intent.putExtra("modestring",modestring);
                 startActivity(intent);
 
 
