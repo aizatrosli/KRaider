@@ -2,6 +2,7 @@ package com.kudakoding.aaizat.kraider;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -274,7 +275,13 @@ public class MainActivity extends AppCompatActivity implements JoyStick.JoyStick
         if (sendnow == true) {
             joysend = modestring + ", " + joyysend + ", " + joyxsend;
             //Log.d(TAG, "Sending data  " + joysend);
-            sendData(joysend);
+            if (android.os.Build.VERSION.SDK_INT > 9)
+            {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+                sendData(joysend);
+            }
+
         }
 
     }
