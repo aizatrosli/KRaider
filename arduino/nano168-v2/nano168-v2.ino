@@ -3,8 +3,8 @@
 Servo steering;
 
 uint8_t  steerPin = 8;
-uint8_t  motorPin = 6;
-uint8_t  togglePin = 7;
+uint8_t  motorPin = 7;
+uint8_t  togglePin = 10;
 
 int16_t  throttleVal;
 int8_t  steerVal;
@@ -42,21 +42,20 @@ void loop() {
         throttleVal = receivedArr[1].toInt();
         modeVal = receivedArr[0];
       }
-
     mapsteerVal = map(steerVal,-100,100,0,46);
-    mapthrottleVal = map(throttleVal,-100,100,0,255);
+    mapthrottleVal = map(abs(throttleVal),0,100,0,255);
     steering.write(mapsteerVal);
-    throttle(togglePin, motorPin, mapthrottleVal);
+    throttle(togglePin, motorPin, throttleVal, mapthrottleVal);
 }
-void throttle(uint8_t togglePin, uint8_t motorPin, int16_t throttleVal)
+void throttle(uint8_t togglePin, uint8_t motorPin, int8_t realthrottleVal, uint8_t unrealthrottleVal)
 {
-  analogWrite(motorPin, abs(throttleVal));
-  if (throttleVal < 0)
+  if (realthrottleVal < 0)
     {
-      digitalWrite(togglePin, LOW);
+      digitalWrite(togglePin, HIGH);
     }
   else
   {
-      digitalWrite(togglePin, HIGH);
+      digitalWrite(togglePin, LOW);
   }
+  analogWrite(motorPin, unrealthrottleVal);
 }
